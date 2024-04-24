@@ -17,6 +17,11 @@ namespace JobApplicationLibrary
 
         public ApplicationResult Evaluate(JobApplication form)
         {
+            if(form.Applicant == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             if(form.Applicant.Age < minAge)
             {
                 return ApplicationResult.AutoRejected;

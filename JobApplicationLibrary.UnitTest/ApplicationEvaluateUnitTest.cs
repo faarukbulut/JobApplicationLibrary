@@ -143,6 +143,22 @@ namespace JobApplicationLibrary.UnitTest
 
         }
 
+        [Test]
+        public void Application_WithNullApplicant_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var mockValidator = new Mock<IIdentityValidator>();
+
+            var evaluator = new ApplicationEvaluator(mockValidator.Object);
+            var form = new JobApplication();
+
+            // Action
+            Action appResultAction = () => evaluator.Evaluate(form);
+
+
+            // Assert
+            appResultAction.Should().Throw<ArgumentNullException>();
+        }
 
     }
 }
