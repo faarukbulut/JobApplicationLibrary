@@ -160,5 +160,26 @@ namespace JobApplicationLibrary.UnitTest
             appResultAction.Should().Throw<ArgumentNullException>();
         }
 
+        [Test]
+        public void Application_WithDefaultValue_IsValidCalled()
+        {
+            // Arrange
+            var mockValidator = new Mock<IIdentityValidator>();
+            mockValidator.DefaultValue = DefaultValue.Mock;
+            mockValidator.Setup(x => x.Country).Returns("TURKIYE");
+
+            var evaluator = new ApplicationEvaluator(mockValidator.Object);
+            var form = new JobApplication()
+            {
+                Applicant = new Applicant() { Age = 19 }
+            };
+
+            // Action
+            evaluator.Evaluate(form);
+
+            // Assert
+            mockValidator.Verify(x => x.IsValid(It.IsAny<string>()));
+        }
+
     }
 }
