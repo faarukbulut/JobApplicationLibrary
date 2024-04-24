@@ -8,13 +8,25 @@ namespace JobApplicationLibrary
         private const int minAge = 18;
         private const int autoAcceptedYearOfExperience = 15;
         private List<string> techStackList = new() { "C#", "Microservice", "OOP", "Net Core" };
-        private IdentityValidator _identityValidator;
+        private readonly IIdentityValidator _identityValidator;
+
+        public ApplicationEvaluator(IIdentityValidator identityValidator)
+        {
+            _identityValidator = identityValidator;
+        }
 
         public ApplicationResult Evaluate(JobApplication form)
         {
             if(form.Applicant.Age < minAge)
             {
                 return ApplicationResult.AutoRejected;
+            }
+
+            var validIdentity = _identityValidator.isValid(form.Applicant.IdentityNumber);
+
+            if (!validIdentity)
+            {
+                return ApplicationResult.TransferredToHR;
             }
 
             var sr = GetTechStackSimilarityRate(form.TechStackList);
