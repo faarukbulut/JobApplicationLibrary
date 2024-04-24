@@ -120,6 +120,28 @@ namespace JobApplicationLibrary.UnitTest
             Assert.AreEqual(ApplicationResult.TransferredToCTO, appResult);
         }
 
+        [Test]
+        public void Application_WithOver50_ValidationModeToDetailed()
+        {
+            // Arrange
+            var mockValidator = new Mock<IIdentityValidator>();
+            mockValidator.SetupProperty(x => x.ValidationMode);
+
+            var evaluator = new ApplicationEvaluator(mockValidator.Object);
+            var form = new JobApplication()
+            {
+                Applicant = new Applicant() { Age = 51 },
+            };
+
+            // Action
+            var appResult = evaluator.Evaluate(form);
+
+
+            // Assert
+            Assert.AreEqual(ValidationMode.Detailed, mockValidator.Object.ValidationMode);
+
+        }
+
 
     }
 }
