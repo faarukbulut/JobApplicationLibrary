@@ -22,7 +22,12 @@ namespace JobApplicationLibrary
                 return ApplicationResult.AutoRejected;
             }
 
-            var validIdentity = _identityValidator.isValid(form.Applicant.IdentityNumber);
+            if(_identityValidator.Country != "TURKIYE")
+            {
+                return ApplicationResult.TransferredToCTO;
+            }
+
+            var validIdentity = _identityValidator.IsValid(form.Applicant.IdentityNumber);
 
             if (!validIdentity)
             {

@@ -2,6 +2,7 @@
 {
     public interface IIdentityValidator
     {
-        bool isValid(string identityNumber);
+        bool IsValid(string identityNumber);
+        string Country { get; }
     }
 }

@@ -2,7 +2,9 @@
 {
     public class IdentityValidator : IIdentityValidator
     {
-        public bool isValid(string identityNumber)
+        public string Country => "USA";
+
+        public bool IsValid(string identityNumber)
         {
             return true;
         }
