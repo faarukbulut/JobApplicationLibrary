@@ -1,4 +1,5 @@
-﻿using JobApplicationLibrary.Models;
+﻿using FluentAssertions;
+using JobApplicationLibrary.Models;
 using JobApplicationLibrary.Services;
 using Moq;
 using NUnit.Framework;
@@ -24,7 +25,7 @@ namespace JobApplicationLibrary.UnitTest
             var appResult = evaluator.Evaluate(form);
 
             // Assert
-            Assert.AreEqual(ApplicationResult.AutoRejected, appResult);
+            appResult.Should().Be(ApplicationResult.AutoRejected);
 
         }
 
@@ -48,7 +49,7 @@ namespace JobApplicationLibrary.UnitTest
             var appResult = evaluator.Evaluate(form);
 
             // Assert
-            Assert.AreEqual(ApplicationResult.AutoRejected, appResult);
+            appResult.Should().Be(ApplicationResult.AutoRejected);
         }
 
         [Test]
@@ -75,7 +76,7 @@ namespace JobApplicationLibrary.UnitTest
             var appResult = evaluator.Evaluate(form);
 
             // Assert
-            Assert.AreEqual(ApplicationResult.AutoAccepted, appResult);
+            appResult.Should().Be(ApplicationResult.AutoAccepted);
         }
 
         [Test]
@@ -97,7 +98,7 @@ namespace JobApplicationLibrary.UnitTest
             var appResult = evaluator.Evaluate(form);
 
             // Assert
-            Assert.AreEqual(ApplicationResult.TransferredToHR, appResult);
+            appResult.Should().Be(ApplicationResult.TransferredToHR);
         }
 
         [Test]
@@ -117,7 +118,7 @@ namespace JobApplicationLibrary.UnitTest
             var appResult = evaluator.Evaluate(form);
 
             // Assert
-            Assert.AreEqual(ApplicationResult.TransferredToCTO, appResult);
+            appResult.Should().Be(ApplicationResult.TransferredToCTO);
         }
 
         [Test]
@@ -134,11 +135,11 @@ namespace JobApplicationLibrary.UnitTest
             };
 
             // Action
-            var appResult = evaluator.Evaluate(form);
+            evaluator.Evaluate(form);
 
 
             // Assert
-            Assert.AreEqual(ValidationMode.Detailed, mockValidator.Object.ValidationMode);
+            mockValidator.Object.ValidationMode.Should().Be(ValidationMode.Detailed);
 
         }
 
